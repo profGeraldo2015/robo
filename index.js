@@ -2,11 +2,15 @@ const axios = require("axios");
 const crypto = require("crypto");
 const mysql = require("mysql");
 
+const toaqui = require('./funcoes.js');
+const changeData = require('./funcoes.js');
+//const engolfandoAlta = require("./funcoes.js");
+
 const API_URL = "https://testnet.binance.vision";//URL de produção: "https://api.binance.com";
 const SYMBOL = "BTCUSDT";
 
-const SELL_PRICE = 42500;
-const BUY_PRICE = 41200;
+const SELL_PRICE = 44500;
+const BUY_PRICE = 43100;
 
 const QUANTITY = "0.001";
 const API_KEY = "EyoHMyzdl5AjWbFUtPrFiI9Ew80yDOTwI1NUNFdYgngLI0E8GGtQHqsDmrwyd2PF";//aprenda a criar as chaves: https://www.youtube.com/watch?v=-6bF6a6ecIs
@@ -41,6 +45,16 @@ async function start() {
 
   const { data } = await axios.get(API_URL + "/api/v3/klines?limit=21&interval=15m&symbol=" + SYMBOL);
 
+ // console.log(data);
+/*
+  if(engolfandoAlta(data)){
+    console.log('>>>>>> engolfandoAlta');
+  }else{
+    console.log('>>>>>> engolfandoBaixa');
+  }
+
+  };
+*/
   const candle = data[data.length - 1];
   let operacao = "STAY";
 
@@ -139,7 +153,10 @@ async function start() {
 
   console.log('carteira ', saldd * precoAtual * QUANTITY);
 
-  let dado = changeData();
+  let dado = changeData2();
+  let dado2 = changeData();
+
+  console.log('dado2 ',dado2);
 
   //console.log(dado.data);
   //console.log(dado.hora);
@@ -163,6 +180,7 @@ async function start() {
 
   console.log('maior menor');
   consultaMaiorMenorDB();
+  toaqui("testedfdsfldslfj");
 
 }
 
@@ -199,7 +217,7 @@ async function newOrder(symbol, quantity, side) {
   }
 }
 
-setInterval(start, 1 * 30 * 1000);//cada 1 minutos
+setInterval(start, 5 * 60 * 1000);//cada 5 minutos
 
 start();
 
@@ -233,33 +251,6 @@ function saveData(data) {
 //});
 
 
-function changeData() {
-
-  // Criando um novo objeto de data
-  const data = new Date();
-
-  // Obtendo o dia, mês e ano
-  const dia = data.getDate();
-  const mes = data.getMonth() + 1; // Adicione +1 porque os meses começam do zero (janeiro é 0)
-  const ano = data.getFullYear();
-
-  // Obtendo a hora, minuto e segundo
-  const hora = data.getHours();
-  const minuto = data.getMinutes();
-  const segundo = data.getSeconds();
-
-  // Formatando para o formato dia-mês-ano hora:minuto:segundo
-  //const dataFormatada = `${dia}-${mes}-${ano} ${hora}:${minuto}:${segundo}`;
-  const dataFormatada =
-  {
-    data: `${ano}-${mes}-${dia}`,
-    hora: `${hora}:${minuto}:${segundo}`
-  };
-
-  return dataFormatada; // Exibe a data formatada com hora
-
-
-}
 
 // Função para realizar uma consulta e retornar o resultado
 function getSaldoDB(sql) {
@@ -314,3 +305,31 @@ async function consultaMaiorMenorDB() {
 
 // Executar o exemplo
 //consultaMaiorMenorDB();
+
+function changeData2() {
+
+  // Criando um novo objeto de data
+  const data = new Date();
+
+  // Obtendo o dia, mês e ano
+  const dia = data.getDate();
+  const mes = data.getMonth() + 1; // Adicione +1 porque os meses começam do zero (janeiro é 0)
+  const ano = data.getFullYear();
+
+  // Obtendo a hora, minuto e segundo
+  const hora = data.getHours();
+  const minuto = data.getMinutes();
+  const segundo = data.getSeconds();
+
+  // Formatando para o formato dia-mês-ano hora:minuto:segundo
+  //const dataFormatada = `${dia}-${mes}-${ano} ${hora}:${minuto}:${segundo}`;
+  const dataFormatada =
+  {
+    data: `${ano}-${mes}-${dia}`,
+    hora: `${hora}:${minuto}:${segundo}`
+  };
+
+  return dataFormatada; // Exibe a data formatada com hora
+
+
+}
