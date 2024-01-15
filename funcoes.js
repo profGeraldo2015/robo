@@ -1,8 +1,6 @@
-const toaqui = (param) => {
+function toaqui (param) {
   console.log(param);
 }
-
-module.exports = toaqui;
 
 function changeData() {
 

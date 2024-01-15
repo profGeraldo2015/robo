@@ -2,10 +2,13 @@ const axios = require("axios");
 const crypto = require("crypto");
 const mysql = require("mysql");
 
-const toaqui = require('./funcoes.js');
-const changeData = require('./funcoes.js');
-//const engolfandoAlta = require("./funcoes.js");
+//import toaqui from './funcoes.cjs'; 
 
+//import { toaqui } from pkj;
+
+//const changeData = require('./funcoes.js');
+//const engolfandoAlta = require("./funcoes.js");
+//toaqui('toaqui');
 const API_URL = "https://testnet.binance.vision";//URL de produção: "https://api.binance.com";
 const SYMBOL = "BTCUSDT";
 
@@ -154,9 +157,12 @@ async function start() {
   console.log('carteira ', saldd * precoAtual * QUANTITY);
 
   let dado = changeData2();
-  let dado2 = changeData();
 
-  console.log('dado2 ',dado2);
+  console.log('dado ',dado);
+
+  //let dado2 = changeData();
+
+  //console.log('dado2 ',dado2);
 
   //console.log(dado.data);
   //console.log(dado.hora);
@@ -180,7 +186,9 @@ async function start() {
 
   console.log('maior menor');
   consultaMaiorMenorDB();
-  toaqui("testedfdsfldslfj");
+
+ // console.log('teste2');
+  //toaqui("teste");
 
 }
 
